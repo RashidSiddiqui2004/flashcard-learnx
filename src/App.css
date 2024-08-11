@@ -1,0 +1,20 @@
+#root {
+  margin: 0 auto;
+  background-color: #020617;
+  color: white;
+  text-align: center; 
+}
+
+@font-face {
+  font-family: raleway;
+  src: url(/src/assets/Raleway.ttf);
+}
+
+@font-face {
+  font-family: raleway-italic;
+  src: url(/src/assets/Raleway-Italic.ttf);
+}
+
+.text-raleway {
+  font-family: raleway;
+}
