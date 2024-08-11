@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <nav className='bg-slate-950 text-white shadow-md flex justify-between items-center px-5 py-2 text-raleway'>
             <div className='flex items-center'>
-                <h1 className='text-xl font-bold'>FlashCard LearnX</h1>
+                <Link to={'/'} className='text-xl font-bold'>FlashCard LearnX</Link>
             </div>
             <ul className='flex space-x-8'>
                 <li>
