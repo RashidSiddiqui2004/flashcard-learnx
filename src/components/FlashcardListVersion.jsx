@@ -4,9 +4,7 @@ import './FlashCard.css';
 import { MdDelete } from "react-icons/md";
 import EditForm from './EditForm';
 
-// import { FcIdea } from "react-icons/fc"; 
-
-const FlashcardListVersion = ({ id, question, answer, handleDelete }) => {
+const FlashcardListVersion = ({ cardID, title, description, handleDelete }) => {
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -18,12 +16,12 @@ const FlashcardListVersion = ({ id, question, answer, handleDelete }) => {
         <li className='bg-slate-800 rounded-lg shadow-lg p-4 flex justify-between items-center
             my-2'>
             {
-                isEditing && <EditForm cardQuestion={question} cardAnswer={answer} cardId={id} handleToggleEdit={handleToggleEdit} />
+                isEditing && <EditForm cardTitle={title} cardDescription={description} cardId={cardID} handleToggleEdit={handleToggleEdit} />
             }
 
             <div className='text-left'>
-                <h2 className='text-xl font-semibold'>{question}</h2>
-                <p className='text-gray-400'>Answer: {answer}</p>
+                <h2 className='text-xl font-semibold'>{title}</h2>
+                <p className='text-gray-400'>Description: {description}</p>
             </div>
             <div className='flex space-x-4'>
                 <button
@@ -34,7 +32,7 @@ const FlashcardListVersion = ({ id, question, answer, handleDelete }) => {
                 </button>
                 <button
                     className='text-red-500 hover:text-red-300 flex'
-                    onClick={() => handleDelete(id)}
+                    onClick={() => { handleDelete(cardID) }}
                 >
                     <MdDelete className='m-[2px]' />
                     Delete

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import FlashCard from '../components/FlashCard';
 import NavigationForCards from '../components/NavigationForCards';
 import AppLayout from '../layout/applayout';
+import LandingPage from '../components/LandingPage';
 
 const Homepage = () => {
 
@@ -41,18 +42,26 @@ const Homepage = () => {
     // ];
 
     const [currentcardId, setCurrentCardId] = useState(0);
+    const [isRevealed, setIsRevealed] = useState(false);
+
+    const handleFlip = () => {
+        setIsRevealed(!isRevealed);
+    }
 
     const handleCardChange = (newCardId) => {
         if (newCardId < 0 || newCardId >= flashcards.length) {
             return false;
         }
-        setCurrentCardId(newCardId);
+        setIsRevealed(false);
+        setCurrentCardId(newCardId);    
         return true;
     }
+
     return (
         <AppLayout>
+            <LandingPage />
 
-            <div className='mx-[20vw] my-[10vh]'>
+            <div className='mx-5 md:mx-[20vw] my-[10vh]' id='flashcards'>
                 {
                     flashcards !== null &&
                     <FlashCard
@@ -60,12 +69,18 @@ const Homepage = () => {
                         answer={flashcards[currentcardId]?.answer}
                         title={flashcards[currentcardId]?.title}
                         description={flashcards[currentcardId]?.description}
+                        isRevealed={isRevealed}
+                        onCardClick={handleFlip}
                     />
                 }
+
+            </div>
+            <div className='my-[10vh]'>
+                <NavigationForCards totalCards={flashcards?.length} currentcardId={currentcardId}
+                    onChangeCardId={handleCardChange} />
+
             </div>
 
-            <NavigationForCards totalCards={flashcards?.length} currentcardId={currentcardId}
-                onChangeCardId={handleCardChange} />
         </AppLayout>
     )
 }

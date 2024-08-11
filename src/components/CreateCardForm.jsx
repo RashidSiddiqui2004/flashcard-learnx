@@ -1,46 +1,62 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 const CreateCardForm = () => {
 
     const [cardData, setCardData] = useState({
-        question: "",
-        answer: ""
+        title: "",
+        description: ""
     });
 
     const handleSubmitCard = () => {
-        console.log(cardData);
+
+        if (cardData.title === "" || cardData.description === "") {
+            toast.info("Pls provide title and description of the flashcard");
+            return;
+        }
+        axios.post('http://localhost:8080/api/cards/addFlashCard', cardData)
+            .then(response => {
+                setCardData({ title: "", description: "" })
+                toast.success("Created FlashCard successfully!");
+            })
+            .catch(error => console.error('Error fetching users:', error));
     }
 
     return (
-        <div className='py-10 px-6 bg-slate-900 shadow-lg mx-auto rounded-lg min-h-[60vh]'>
+        <div className='mx-8 my-8 py-10 px-6 bg-slate-900 shadow-lg rounded-lg min-h-[60vh]'>
+
+            <ToastContainer />
             <h1 className='text-white text-left font-bold text-2xl mb-8'>Create a New FlashCard Set</h1>
 
             <div className='flex flex-col gap-y-6'>
                 <div>
-                    <label htmlFor="term" className='text-gray-400 font-semibold block mb-2'>Enter Question</label>
+                    <label htmlFor="term" className='text-gray-400 font-semibold block mb-2 text-left'>Enter Question</label>
                     <input
                         type="text"
-                        placeholder='Enter a title like Recursion, Dynamic Programming, Deadlock'
+                        value={cardData.title}
+                        placeholder='Enter a CS term like Recursion, Dynamic Programming, Deadlock...'
                         className='w-full p-2 bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-blue-500 text-white'
                         onChange={(e) => {
                             setCardData(prev => ({
                                 ...prev,
-                                question: e.target.value
+                                title: e.target.value
                             }));
                         }}
                     />
                 </div>
 
                 <div>
-                    <label htmlFor="description" className='text-gray-400 font-semibold block mb-2'>Enter Answer</label>
+                    <label htmlFor="description" className='text-gray-400 font-semibold block mb-2 text-left'>Enter Answer</label>
                     <input
                         type="text"
-                        placeholder='Enter description of the above term or answer to the above question...'
+                        value={cardData.description}
+                        placeholder='Enter description of the above term...'
                         className='w-full p-2 bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-blue-500 text-white'
                         onChange={(e) => {
                             setCardData(prev => ({
                                 ...prev,
-                                answer: e.target.value
+                                description: e.target.value
                             }));
                         }}
                     />
@@ -56,7 +72,7 @@ const CreateCardForm = () => {
                     </button>
                 </div>
             </div>
-            
+
         </div>
     );
 }

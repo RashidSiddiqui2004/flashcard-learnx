@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import './FlashCard.css';
 import { FcIdea } from "react-icons/fc";
 
-
-const FlashCard = ({ title, question, answer, description }) => {
-    const [isRevealed, setIsRevealed] = useState(false);
+const FlashCard = ({ title, question, answer, description, isRevealed, onCardClick }) => {
 
     return (
         <div className='flashcard-container'>
             <div
                 className={`flashcard ${isRevealed ? 'flip' : ''}`}
-                onClick={() => setIsRevealed(!isRevealed)}
+                onClick={() => {onCardClick()}}
             >
                 {
                     !isRevealed &&

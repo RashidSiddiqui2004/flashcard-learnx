@@ -6,6 +6,8 @@ import CreateCard from './pages/CreateCard';
 import Homepage from './pages/Homepage';
 import Admin from './pages/admin';
 import ManageCards from './components/ManageCards';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   return (

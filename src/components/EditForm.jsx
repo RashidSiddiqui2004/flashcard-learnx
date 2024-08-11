@@ -1,16 +1,27 @@
+import axios from 'axios';
 
 import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
+import { toast } from 'react-toastify';
 
-const EditForm = ({ cardId, cardQuestion, cardAnswer, handleToggleEdit }) => {
+const EditForm = ({ cardId, cardTitle, cardDescription, handleToggleEdit }) => {
 
     const [cardData, setCardData] = useState({
-        question: cardQuestion,
-        answer: cardAnswer
+        title: cardTitle,
+        description: cardDescription
     })
 
     const handleCardEdit = () => {
-        handleToggleEdit();
+        if (cardData.title === "" || cardData.description === "") {
+            toast.info("Pls provide title and description of the flashcard");
+            return;
+        }
+        axios.post(`http://localhost:8080/api/cards/editFlashCard/${cardId}`, cardData)
+            .then(response => {
+                toast.success("Edited card successfully!")
+                handleToggleEdit();
+            })
+            .catch(error => console.error('Error fetching users:', error));
     }
 
     return (
@@ -27,13 +38,13 @@ const EditForm = ({ cardId, cardQuestion, cardAnswer, handleToggleEdit }) => {
                     <label htmlFor="term" className='text-left block font-medium mb-2'>Enter Question</label>
                     <input
                         type="text"
-                        value={cardData.question}
+                        value={cardData.title}
                         placeholder='Enter a title like Recursion, Dynamic Programming, Deadlock'
                         className='w-full p-2 text-sm bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-blue-500'
                         onChange={(e) => {
                             setCardData(prev => ({
                                 ...prev,
-                                question: e.target.value
+                                title: e.target.value
                             }));
                         }}
                     />
@@ -43,12 +54,12 @@ const EditForm = ({ cardId, cardQuestion, cardAnswer, handleToggleEdit }) => {
                     <label htmlFor="description" className='text-left block font-medium mb-2'>Enter Answer</label>
                     <input
                         type="text"
-                        value={cardData.answer}
+                        value={cardData.description}
                         className='w-full p-2 text-sm bg-transparent border-b-2 border-gray-600 focus:outline-none focus:border-blue-50'
                         onChange={(e) => {
                             setCardData(prev => ({
                                 ...prev,
-                                answer: e.target.value
+                                description: e.target.value
                             }));
                         }}
                     />

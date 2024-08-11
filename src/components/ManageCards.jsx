@@ -1,43 +1,41 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import AppLayout from '../layout/applayout'
 import FlashcardListVersion from './FlashcardListVersion';
+import { ToastContainer, toast } from 'react-toastify';
 
 const ManageCards = () => {
-    const [flashcards, setFlashCards] = useState([
-        {
-            question: "Outline, list in steps, or follow the path.",
-            answer: "Trace"
-        },
-        {
-            question: "A technique for solving a problem by breaking it down into smaller problems.",
-            answer: "Divide and Conquer"
-        },
-        {
-            question: "A function that calls itself to solve smaller instances of the same problem.",
-            answer: "Recursion"
-        },
-        {
-            question: "A data structure that follows the Last In, First Out (LIFO) principle.",
-            answer: "Stack"
-        },
-        {
-            question: "A programming paradigm based on the concept of objects containing both data and behavior.",
-            answer: "Object-Oriented Programming"
-        }
-    ]);
+    const [flashcards, setflashcards] = useState(null);
 
-    const handleDelete = (index) => {
-        const newCards = flashcards.filter((_, i) => i !== index);
-        setFlashCards(newCards);
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/cards/getAllFlashCards')
+            .then(response => {
+                setflashcards(response.data.flashcards); 
+            })
+            .catch(error => console.error('Error fetching cards: ', error));
+
+    }, []);
+
+    const handleDelete = (cardID) => {
+        axios.get(`http://localhost:8080/api/cards/deleteFlashCard/${cardID}`)
+            .then(
+                response => {
+                    setflashcards(response.data.flashcards);
+                    toast.success("Successfully deleted flashcard!!");
+                }
+            )
+            .catch(error => console.error('Error deleting card: ', error));
     };
 
     return (
         <AppLayout>
 
-            {flashcards.map((card, index) => {
+            <ToastContainer />
+
+            {flashcards?.map((card, index) => {
                 return (
-                    <FlashcardListVersion key={index} id={index} question={card?.question}
-                        answer={card?.answer} handleDelete={handleDelete} />
+                    <FlashcardListVersion key={index} cardID={card?.id} title={card?.title}
+                        description={card?.description} handleDelete={handleDelete} />
                 )
             })}
 
