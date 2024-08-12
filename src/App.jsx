@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Editcard from './pages/Editcard';
 import CreateCard from './pages/CreateCard';
 import Homepage from './pages/Homepage';
-import Admin from './pages/admin';
+import Admin from './pages/Admin';
 import ManageCards from './components/ManageCards';
 import 'react-toastify/dist/ReactToastify.css';
 
