@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './FlashCard.css';
+import React from 'react';
+import './flashCard.css';
 import { FcIdea } from "react-icons/fc";
 
 const FlashCard = ({ title, question, answer, description, isRevealed, onCardClick }) => {
@@ -8,7 +8,7 @@ const FlashCard = ({ title, question, answer, description, isRevealed, onCardCli
         <div className='flashcard-container'>
             <div
                 className={`flashcard ${isRevealed ? 'flip' : ''}`}
-                onClick={() => {onCardClick()}}
+                onClick={() => { onCardClick() }}
             >
                 {
                     !isRevealed &&
