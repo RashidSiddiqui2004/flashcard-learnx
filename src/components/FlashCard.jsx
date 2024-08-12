@@ -1,5 +1,5 @@
 import React from 'react';
-import './flashCard.css';
+import './styles/flashcard.css'
 import { FcIdea } from "react-icons/fc";
 
 const FlashCard = ({ title, question, answer, description, isRevealed, onCardClick }) => {
