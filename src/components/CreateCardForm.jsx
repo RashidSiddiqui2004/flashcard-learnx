@@ -15,7 +15,7 @@ const CreateCardForm = () => {
             toast.info("Pls provide title and description of the flashcard");
             return;
         }
-        axios.post('http://localhost:8080/api/cards/addFlashCard', cardData)
+        axios.post(`${backendURL}/api/cards/addFlashCard`, cardData)
             .then(response => {
                 setCardData({ title: "", description: "" })
                 toast.success("Created FlashCard successfully!");

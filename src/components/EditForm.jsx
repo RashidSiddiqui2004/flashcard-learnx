@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { toast } from 'react-toastify';
+import backendURL from '../constants';
 
 const EditForm = ({ cardId, cardTitle, cardDescription, handleToggleEdit }) => {
 
@@ -16,7 +17,7 @@ const EditForm = ({ cardId, cardTitle, cardDescription, handleToggleEdit }) => {
             toast.info("Pls provide title and description of the flashcard");
             return;
         }
-        axios.post(`http://localhost:8080/api/cards/editFlashCard/${cardId}`, cardData)
+        axios.post(`${backendURL}/api/cards/editFlashCard/${cardId}`, cardData)
             .then(response => {
                 toast.success("Edited card successfully!")
                 handleToggleEdit();
