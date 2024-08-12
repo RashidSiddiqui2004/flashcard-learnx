@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import './FlashCard.css';
+import './flashCard.css';
 import { MdDelete } from "react-icons/md";
 import EditForm from './EditForm';
 
